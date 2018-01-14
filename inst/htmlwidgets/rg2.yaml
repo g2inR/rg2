@@ -1,0 +1,9 @@
+dependencies:
+  - name: g2
+    version: 3.0.4
+    src: htmlwidgets
+    script: g2.min.js
+  - name: data-set
+    version: 0.8.3
+    src: htmlwidgets
+    script: data-set.min.js
