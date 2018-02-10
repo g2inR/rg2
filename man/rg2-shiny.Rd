@@ -2,13 +2,13 @@
 % Please edit documentation in R/rg2.R
 \name{rg2-shiny}
 \alias{rg2-shiny}
-\alias{rg2Output}
-\alias{renderRg2}
+\alias{rg2_output}
+\alias{render_rg2}
 \title{Shiny bindings for rg2}
 \usage{
-rg2Output(outputId, width = "100\%", height = "400px")
+rg2_output(outputId, width = "100\%", height = "400px")
 
-renderRg2(expr, env = parent.frame(), quoted = FALSE)
+render_rg2(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{outputId}{output variable to read from}

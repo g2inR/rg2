@@ -1,4 +1,3 @@
-
 HTMLWidgets.widget({
 
   name: 'rg2',
@@ -6,57 +5,85 @@ HTMLWidgets.widget({
   type: 'output',
 
   factory: function(el, width, height) {
+    G2.track(false);
+
+   // el.parentNode.remove()
+    var chart;
 
     return {
 
       renderValue: function(params) {
-        console.log(params)
 
-        //to change later
-        const chart = new G2.Chart({
-          container: el,
-          forceFit: true,
-          height: window.innerHeight
-        });
-        
-        //to do: strategy ->
-        //params: only non-empty arguments
-        //get object keys from params (source, scales, geoms, etc...)
-        //for each key pass arguments to G2
-  
-        if (Object.keys(params).indexOf('transform') > -1){
-            const ds = new DataSet();
-            const dv = ds.createView().source(params.source);
-            dv.transform(params.transform);
-            chart.source(dv)
-        } else{
-            //source
-            chart.source(params.source)
+       /* var widget = document.getElementById(el.id)
+        while (widget.firstChild) {
+        widget.removeChild(widget.firstChild);
+        }*/
+
+
+
+        if (Object.keys(params).indexOf("facet") > -1) {
+          var facet = params.facet
+          delete params.facet
+
         }
 
-        //scales
-        params.scales.forEach(function(d){
-            console.log(d.type)
-            console.log(d.opts)
-          return chart['scale'](d.type, d.opts) 
-        }) 
+        params.forceFit = params.forceFit ? params.forceFit: true;
+        params.container = params.container ? params.container : el.id;
+        params.width = params.width ? params.width : width;
+        params.height = params.height ? params.height : height;
+        params.data = HTMLWidgets.dataframeToD3(params.data);
 
-        //geoms
-        params.geom.forEach(function(d){
-          c = chart[d.type]() 
-          Object.keys(d)
-            .filter(function(i){ return i != "type"})
-            .forEach(function(i){
-              c[i].apply(c, d[i]);
-          })
-        })
+
+        console.log(params)
+        chart = new G2.Chart(params);
+
+        if (typeof(facet) != "undefined") {
+
+
+         if (Object.keys(facet.opts).indexOf('eachView') == -1){
+           facet.opts.test = function(a){a + 1}
+           facet.opts.eachView = function(view){
+             facet.geoms.forEach(function(d){
+                var v = view[d.type]();
+                Object.keys(d)
+                  .filter(function(i){ return i != "type"})
+                  .forEach(function(i){
+                    var args = d[i];
+                    if(typeof args == "object"){
+                     args = Object.values(args)
+                    }
+                    else if(!Array.isArray(args)){
+                      args = [args]
+                    }
+                    return v[i].apply(v, args);
+                  })
+              })
+            }
+          }
+          console.log(facet)
+          chart['facet'](facet.type, facet.opts);
+        }
+
+
+
         chart.render();
+
+       //to do: set as optional
+        const brush = new Brush({
+          canvas : chart.get('canvas'),
+          chart: chart,
+          type: 'X',
+        });
+
+
+       chart.on('plotdblclick', function(){
+        chart.get('options').filters = {};
+        chart.repaint();
+      });
 
       },
 
       resize: function(width, height) {
-
-        // TODO: code to re-render the widget with a new size
 
       }
 

@@ -7,3 +7,7 @@ dependencies:
     version: 0.8.3
     src: htmlwidgets
     script: data-set.min.js
+  - name: g2-brush
+    version: 0.0.2
+    src: htmlwidgets
+    script: g2-brush.js

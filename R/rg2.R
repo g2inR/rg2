@@ -35,13 +35,13 @@ rg2 <- function(params, width = NULL, height = NULL, elementId = NULL) {
 #' @name rg2-shiny
 #'
 #' @export
-rg2Output <- function(outputId, width = '100%', height = '400px'){
+rg2_output <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'rg2', width, height, package = 'rg2')
 }
 
 #' @rdname rg2-shiny
 #' @export
-renderRg2 <- function(expr, env = parent.frame(), quoted = FALSE) {
+render_rg2 <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  htmlwidgets::shinyRenderWidget(expr, rg2Output, env, quoted = TRUE)
+  htmlwidgets::shinyRenderWidget(expr, rg2_output, env, quoted = TRUE)
 }

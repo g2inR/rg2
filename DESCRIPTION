@@ -10,9 +10,10 @@ LazyData: true
 RoxygenNote: 6.0.1
 Collate: 
     'g2.R'
-    'add_source.R'
+    'facets.R'
     'geom_attr.R'
     'geom_types.R'
     'rg2.R'
     'scales.R'
+    'source.R'
     'transform.R'
