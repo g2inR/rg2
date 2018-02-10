@@ -13,7 +13,7 @@ g2$new()$
 ![](man/charts/iris_point.png)
 
 
-####facets
+#### facets
 ```r
 g <- g2$new()
 g$source(iris)
@@ -24,7 +24,7 @@ g$facet("Species")
 g$render()
 
 ```
-![](man/charts/iris_rect_facet.png)
+![](man/charts/rect_facet.png)
 
 ```r
 g <- g2$new()
@@ -33,4 +33,4 @@ g$point()$position("Sepal.Length", "Sepal.Width")$color("Species")
 g$facet("Species", "tree")
 g$render()
 ```
-![](man/charts/iris_tree_facet.png)
+![](man/charts/tree_facet.png)
