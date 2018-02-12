@@ -21,7 +21,6 @@ g2$set("public", "scale", function(field,
     ticks = ticks,
     sync = sync
   )
-  scale <- scale[!sapply(scale, is.null)]
   self$chart$options$scales[[field]] <- scale
   invisible(self)
 })

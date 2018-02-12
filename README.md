@@ -34,3 +34,17 @@ g$facet("Species", "tree")
 g$render()
 ```
 ![](man/charts/tree_facet.png)
+
+#### nse ?
+
+```r
+g <- g2$new()
+g$source(ggplot2::diamonds)
+g$point()$
+  position(carat, price)$
+  color(cut)$
+  opacity(0.6)
+g$facet(clarity~cut)
+g$render()
+```
+![](man/charts/diamonds_facet.png)

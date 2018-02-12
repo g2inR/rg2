@@ -7,17 +7,16 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
     G2.track(false);
 
-   // el.parentNode.remove()
     var chart;
 
     return {
 
       renderValue: function(params) {
 
-       /* var widget = document.getElementById(el.id)
+        var widget = document.getElementById(el.id)
         while (widget.firstChild) {
         widget.removeChild(widget.firstChild);
-        }*/
+        }
 
 
 
@@ -41,7 +40,7 @@ HTMLWidgets.widget({
 
 
          if (Object.keys(facet.opts).indexOf('eachView') == -1){
-           facet.opts.test = function(a){a + 1}
+
            facet.opts.eachView = function(view){
              facet.geoms.forEach(function(d){
                 var v = view[d.type]();

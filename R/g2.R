@@ -15,9 +15,7 @@ g2 <- R6::R6Class("g2",
               ),
               render = function() {
                 private$check_facet()
-
-                self$chart <- self$chart[!sapply(self$chart, is.null)]
-                print(self$chart)
+                self$chart <- rm_null(self$chart)
                 rg2(self$chart)
               },
               print = function() {

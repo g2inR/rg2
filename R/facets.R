@@ -3,6 +3,7 @@
 
 g2$set("private", "active_fields", function(){
   fields <- colnames(self$chart$data)
+  #this will fail in some cases by taking in non-active variables with similar names
   active_geoms <- fields[sapply(fields, grepl, self$chart$options$geoms)]
   active_facet <- fields[fields %in% unlist(self$chart$facet)]
   active_view <- list()
@@ -39,9 +40,12 @@ g2$set("public", "facet", function(fields,
                                    padding = NULL,
                                    eachView = NULL,
                                    colTitle = NULL,
-                                   rowTitle = NULL
+                                   rowTitle = NULL,
+                                   line = NULL,
+                                   lineSmooth = NULL
 ){
-  if (!is.null(eachView) && class(eachView) != "JS_EVAL") stop("use `JS` here")
+  if (!is.character(eval(quote(substitute(fields))))) fields <- deparse(substitute(fields))
+  if (grepl("~", fields)) fields <- strsplit(fields, " ~ ")[[1]]
   if (length(fields) == 1) fields <- list(fields)
   facet <- list(type = type,
                 opts = list(
@@ -52,11 +56,13 @@ g2$set("public", "facet", function(fields,
                   padding = padding,
                   eachView = eachView,
                   colTitle = colTitle,
-                  rowTitle = rowTitle
+                  rowTitle = rowTitle,
+                  line = line,
+                  lineSmooth = lineSmooth
                 )
   )
-  facet$opts <- facet$opts[!sapply(facet$opts, is.null)]
   self$chart$facet <- facet
   invisible(self)
 })
+
 
