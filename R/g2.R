@@ -13,6 +13,10 @@ g2 <- R6::R6Class("g2",
                options = list(),
                facet = NULL
               ),
+              with_nse = function(nse = TRUE){
+                private$nse <- nse
+                invisible(self)
+              },
               render = function() {
                 private$check_facet()
                 self$chart <- rm_null(self$chart)
@@ -22,6 +26,9 @@ g2 <- R6::R6Class("g2",
                 print(self$chart)
                 invisible(self)
               }
+            ),
+            private = list(
+              nse = TRUE
             )
 
 )

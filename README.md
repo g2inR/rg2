@@ -48,3 +48,17 @@ g$facet(clarity~cut)
 g$render()
 ```
 ![](man/charts/diamonds_facet.png)
+
+```r
+plot_points <- function(df, x, y, color){
+  g <- g2$new()$with_nse(FALSE)
+  g$source(df)
+  g$point()$
+    position(x, y)$
+    color(color)$
+    shape(color)
+  g$render()
+}
+plot_points(iris, "Sepal.Width", "Sepal.Length", "Species")
+```
+![](man/charts/Plot_points.png)

@@ -2,7 +2,6 @@
 #' @export
 htmlwidgets::`JS`
 
-
 rm_null <- function(l){
   l <- l[!sapply(l, is.null)]
   lapply(l, function(d){
@@ -10,3 +9,4 @@ rm_null <- function(l){
     else d
   })
 }
+
