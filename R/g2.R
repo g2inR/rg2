@@ -1,37 +1,37 @@
-
-#' @import R6
 #' @export
-g2 <- R6::R6Class("g2",
-            public = list(
-              chart = list(
-               padding = NULL,
-               background = NULL,
-               plotBackground = NULL,
-               width = NULL,
-               height = NULL,
-               data = NULL,
-               options = list(),
-               facet = NULL
-              ),
-              with_nse = function(nse = TRUE){
-                private$nse <- nse
-                invisible(self)
-              },
-              render = function() {
-                private$check_facet()
-                self$chart <- rm_null(self$chart)
-                rg2(self$chart)
-              },
-              print = function() {
-                print(self$chart)
-                invisible(self)
-              }
-            ),
-            private = list(
-              nse = TRUE
-            )
-
-)
+g2_config <- function(width = NULL,
+                      height = NULL,
+                      padding = NULL,
+                      background = NULL,
+                      plotBackground = NULL,
+                      forceFit = TRUE,
+                      animate = TRUE,
+                      pixelRatio = NULL) {
+  as.list(environment())
+}
 
 
+#' @export
+g2 <- function(data, code, config = NULL, ...) {
+  if (is.null(config)) config <- g2_config()
+  params <- list(config = config, data = data)
+  if (file.exists(code)) code <- paste(readLines(code), collapse = "\n")
+  code <- gsub("//.*?\n|/\\*.*?\\*/", "", code)
+  if (grepl("new G2.Chart", code)) stop('use g2_config to set up chart configuration', call. = FALSE)
+  if (!grepl("function\\(chart,data\\)", gsub(" ", "", code))) {
+    code <- paste("function(chart, data){", code, "}")
+  }
+  params$g2Script <- htmlwidgets::JS(code)
+  params <- rm_null(params)
+  rg2(params, ...)
+}
+
+
+rm_null <- function(l){
+  l <- l[!sapply(l, is.null)]
+  lapply(l, function(d){
+    if (is.list(d)) rm_null(d)
+    else d
+  })
+}
 
