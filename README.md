@@ -23,6 +23,6 @@ df <- reshape2::melt(df, id = 'date')
 rg2::g2(df, "chart.line().position('date*value').color('variable')")
 
 ```
-![](man/charts/Line chart.png)
+![](man/charts/Line_chart.png)
 
 
